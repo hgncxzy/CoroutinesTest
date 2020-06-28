@@ -3,6 +3,7 @@ package com.hencoder.coroutinescamp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.hencoder.coroutinescamp.model.Repo
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                 val rengwuxian = async { api.listReposKt("rengwuxian") }
                 val google = async { api.listReposKt("google") }
                 textView.text = "${rengwuxian.await()[0].name} + ${google.await()[0].name}"
+                Log.d("xzy",textView.text.toString())
             }
         }
 
