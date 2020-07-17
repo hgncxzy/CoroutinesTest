@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                 val rengwuxian = async { api.listReposKt("rengwuxian") }
                 val google = async { api.listReposKt("google") }
                 textView.text = "${rengwuxian.await()[0].name} + ${google.await()[0].name}"
-                Log.d("xzy",textView.text.toString())
+                Log.d("xzy", textView.text.toString())
             }
         }
 
@@ -181,6 +181,27 @@ class MainActivity : AppCompatActivity() {
                 uiCode1()
             }
         }
+
+        // 使用协程模拟多次请求，失败时重试
+        btn11.setOnClickListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                for (i in 1..6) {
+                    try {
+                        val result = ioCode4(i)
+                        delay(1000)
+                        uiCode4(i, result)
+                        if (i % 3 == 0) {
+                            throw Exception("error")
+                        }
+                    } catch (e: Exception) {
+                        uiCode4(i, "发生异常：${e.message}，开始重试")
+                        val result = ioCode4(i)
+                        uiCode4(i, result)
+                    }
+
+                }
+            }
+        }
     }
 
     // 使用 executor 请求 io 操作
@@ -222,6 +243,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun ioCode4(times: Int): String {
+        var result: String
+        withContext(Dispatchers.IO) {
+            try {
+                println("xzy 第 $times 次执行 io 代码")
+                result = "success"
+            } catch (e: Exception) {
+                result = "fail"
+            }
+        }
+        return result
+    }
+
     private fun uiCode1() {
         println("xzy Coroutines Camp ui1 ${Thread.currentThread().name}")
     }
@@ -232,5 +266,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun uiCode3() {
         println("xzy Coroutines Camp ui3 ${Thread.currentThread().name}")
+    }
+
+    private fun uiCode4(times: Int, result: String?) {
+        println("xzy 第 $times 次更新 UI，请求结果为 $result")
     }
 }
