@@ -188,10 +188,12 @@ class MainActivity : AppCompatActivity() {
                 for (i in 1..6) {
                     try {
                         val result = ioCode4(i)
-                        delay(1000)
-                        uiCode4(i, result)
+                        delay(500)
                         if (i % 3 == 0) {
                             throw Exception("error")
+                            uiCode4(i, "error")
+                        } else {
+                            uiCode4(i, result)
                         }
                     } catch (e: Exception) {
                         uiCode4(i, "发生异常：${e.message}，开始重试")
