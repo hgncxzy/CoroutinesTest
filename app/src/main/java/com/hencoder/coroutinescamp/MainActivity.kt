@@ -200,7 +200,46 @@ class MainActivity : AppCompatActivity() {
                         val result = ioCode4(i)
                         uiCode4(i, result)
                     }
+                }
+            }
+        }
 
+        // 使用 CoroutineExceptionHandler 处理异常 01
+        btn12.setOnClickListener {
+            val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
+                // caught exception
+                println("xzy handler 处理异常，exception:" + throwable.message)
+            }
+            CoroutineScope(Dispatchers.Main + handler).launch {
+                for (i in 1..6) {
+                    val result = ioCode4(i)
+                    delay(500)
+                    if (i % 3 == 0) {
+                        throw NullPointerException()
+                        uiCode4(i, "error")
+                    } else {
+                        uiCode4(i, result)
+                    }
+                }
+            }
+        }
+
+        // 使用 CoroutineExceptionHandler 处理异常 02
+        btn13.setOnClickListener {
+            CoroutineScope(Dispatchers.Main + CoroutineExceptionHandler { coroutineContext, throwable ->
+                // caught exception
+                println("xzy handler 处理异常，exception:" + throwable.message)
+
+            }).launch {
+                for (i in 1..6) {
+                    val result = ioCode4(i)
+                    delay(500)
+                    if (i % 3 == 0) {
+                        throw NullPointerException()
+                        uiCode4(i, "error")
+                    } else {
+                        uiCode4(i, result)
+                    }
                 }
             }
         }

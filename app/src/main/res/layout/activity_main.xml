@@ -105,4 +105,18 @@
         android:text="使用协程模拟多次请求，失败时重试"
         android:textAllCaps="false"
         tools:ignore="HardcodedText" />
+    <Button
+        android:id="@+id/btn12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="使用 CoroutineExceptionHandler 处理异常 01"
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:id="@+id/btn13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="使用 CoroutineExceptionHandler 处理异常 02"
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText" />
 </LinearLayout>
