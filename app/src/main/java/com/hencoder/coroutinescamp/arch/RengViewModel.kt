@@ -11,23 +11,23 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RengViewModel : ViewModel() {
-  init {
-    viewModelScope.launch {
+    init {
+        viewModelScope.launch {
 
+        }
     }
-  }
 
-  val repos = liveData {
-    emit(loadUsers())
-  }
+    val repos = liveData {
+        emit(loadUsers())
+    }
 
-  private suspend fun loadUsers(): List<Repo> {
-    val retrofit = Retrofit.Builder()
-      .baseUrl("https://api.github.com/")
-      .addConverterFactory(GsonConverterFactory.create())
-      .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-      .build()
-    val api = retrofit.create(Api::class.java)
-    return api.listReposKt("rengwuxian")
-  }
+    private suspend fun loadUsers(): List<Repo> {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
+        val api = retrofit.create(Api::class.java)
+        return api.listReposKt("rengwuxian")
+    }
 }
